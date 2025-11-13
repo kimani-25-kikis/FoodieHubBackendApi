@@ -1,0 +1,67 @@
+# Base URL
+@baseUrl = http://localhost:3000
+
+### Root endpoint
+GET {{baseUrl}}/
+
+
+###
+GET {{baseUrl}}/api
+
+
+# ======AUTH TESTING ENDPOINTS=====
+
+### Create a new user
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "first_name": "Joshua",
+  "last_name": "Kimani",
+  "email": "joshua@gmail.com",
+  "phone_number": "0712345678",
+  "password": "123456",
+  "user_type": "customer"
+  
+  
+}
+
+### Admin Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+
+{
+  "email": "Micheal@outlook.com",
+  "password": "adminpass"
+}
+
+### user login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "denis@gmail.com",
+  "password": "password123"
+}
+
+
+### Update user
+PUT http://localhost:3000/api/users/2
+Content-Type: application/json
+
+{
+  "first_name": "denis",
+  "last_name": "kathuri",
+  "email": "denis@gmail.com",
+  "phone_number": "0723356478",
+  "password": "password123"
+}
+
+### Get user by ID
+GET {{baseUrl}}/api/users/2
+
+
+
+### Delete user
+DELETE {{baseUrl}}/api/users/5
