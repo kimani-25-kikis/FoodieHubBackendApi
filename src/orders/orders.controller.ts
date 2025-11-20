@@ -127,3 +127,28 @@ export const deleteOrder = async(c:Context) => {
         return c.json({ error: 'Failed to delete order' }, 500);
     }
 }
+
+// cancel order
+export const cancelOrder = async (c: Context) => {
+    const order_id = Number(c.req.param('order_id'));
+
+    try {
+        // Check if the order exists
+        const checkIfExists = await ordersService.getOrderByIdService(order_id);
+        if (checkIfExists === null) {
+            return c.json({ error: 'Order not found' }, 404);
+        }
+
+        // Update status to CANCELLED
+        const result = await ordersService.updteOrderStatusService(order_id, "cancelled");
+
+        if (result === "Failed to update order try again") {
+            return c.json({ error: result }, 500);
+        }
+
+        return c.json({ message: "Order cancelled successfully" }, 200);
+    } catch (error) {
+        console.error("Error cancelling order:", error);
+        return c.json({ error: "Failed to cancel order" }, 500);
+    }
+};

@@ -28,4 +28,8 @@ ordersRoutes.patch('orders/:order_id', ordersControllers.updateOrderStatus)
 // Delete an order
 ordersRoutes.delete('orders/:order_id',  ordersControllers.deleteOrder)
 
+// Cancel an order
+ordersRoutes.patch('orders/:order_id/cancel', ordersControllers.cancelOrder)
+
+
 export default ordersRoutes

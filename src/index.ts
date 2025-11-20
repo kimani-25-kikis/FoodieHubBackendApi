@@ -18,7 +18,7 @@ app.use(
   '*',
   cors({
     origin: 'http://localhost:5173',// Your frontend dev URL
-    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE','PATCH', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
