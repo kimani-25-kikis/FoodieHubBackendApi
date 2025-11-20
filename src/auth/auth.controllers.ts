@@ -95,7 +95,7 @@ export const loginUser = async (c: Context) => {
         const secretKey = process.env.JWT_SECRET as string;
 
         //generate token
-        const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+        const token = "Bearer "+jwt.sign(payload, secretKey, { expiresIn: '1h' });
 
         //prepare user info to return
         const userInfo: UserPayload = {

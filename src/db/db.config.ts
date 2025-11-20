@@ -37,6 +37,7 @@ export const Config = {
             encrypt: false,
             trustServerCertificate: true,
             enableArithAbort: true
+            
         }
     }
 };

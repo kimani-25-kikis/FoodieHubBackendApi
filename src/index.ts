@@ -7,6 +7,9 @@ import initDatabaseConnection from './db/db.config.ts'
 import { logger } from 'hono/logger'
 import { prometheus } from '@hono/prometheus'
 import authRoutes from './auth/auth.routes.ts'
+import menuItemsRoutes from './menuitems/menu.routes.ts'
+import dataRoutes from './dashboard_data/dashboard_data.routes.ts'
+import ordersRoutes from './orders/orders.routes.ts'
 
 const app = new Hono()
 
@@ -14,7 +17,7 @@ const app = new Hono()
 app.use(
   '*',
   cors({
-    origin: 'http://localhost:5173', // Your frontend dev URL
+    origin: 'http://localhost:5173',// Your frontend dev URL
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -52,6 +55,9 @@ app.get('/api', (c: Context) => {
 // ✅ Mount API routes (auth and users)
 app.route('/api', userRoutes)
 app.route('/api', authRoutes)
+app.route('/api', menuItemsRoutes)
+app.route('/api', dataRoutes)
+app.route('/api', ordersRoutes)
 
 // 404 handler
 app.notFound((c: Context) => {
