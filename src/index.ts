@@ -10,6 +10,9 @@ import authRoutes from './auth/auth.routes.ts'
 import menuItemsRoutes from './menuitems/menu.routes.ts'
 import dataRoutes from './dashboard_data/dashboard_data.routes.ts'
 import ordersRoutes from './orders/orders.routes.ts'
+import categoryRoutes from './categories/categories.routes.ts'
+import restaurantRoutes from './restaurant/restaurant.routes.ts'
+
 
 const app = new Hono()
 
@@ -58,6 +61,8 @@ app.route('/api', authRoutes)
 app.route('/api', menuItemsRoutes)
 app.route('/api', dataRoutes)
 app.route('/api', ordersRoutes)
+app.route('/api', categoryRoutes)
+app.route('/api', restaurantRoutes)
 
 // 404 handler
 app.notFound((c: Context) => {
