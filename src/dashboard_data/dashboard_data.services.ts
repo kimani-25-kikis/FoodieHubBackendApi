@@ -49,24 +49,24 @@ export const getAdminDashboardData = async (): Promise<AdminDashboardData> => {
     }
 }
 
-//get user dashboard data - orders, favorite items, total spent, loyalty points
+//get user dashboard data - UPDATED TO USE customer_id
 export const getUserDashboardData = async (user_id: number): Promise<UserDashboardData> => {
     const db = getDbPool();
 
     try {
-        // Get user's total orders
+        // Get user's total orders - FIXED: Using customer_id
         const ordersResult = await db.request()
             .input('user_id', user_id)
             .query('SELECT COUNT(*) as totalOrders FROM OrdersTable WHERE customer_id = @user_id');
         const totalOrders = ordersResult.recordset[0]?.totalOrders || 0;
 
-        // Get user's total spent (sum of completed orders)
+        // Get user's total spent (sum of completed orders) - FIXED: Using customer_id
         const spentResult = await db.request()
             .input('user_id', user_id)
             .query("SELECT ISNULL(SUM(total_amount), 0) as totalSpent FROM OrdersTable WHERE customer_id = @user_id AND status = 'completed'");
         const totalSpent = spentResult.recordset[0]?.totalSpent || 0;
 
-        // Get user's favorite items count (distinct menu items ordered)
+        // Get user's favorite items count - Count distinct menu items ordered
         const favoritesResult = await db.request()
             .input('user_id', user_id)
             .query('SELECT COUNT(DISTINCT menu_item_id) as favoriteItems FROM OrdersTable WHERE customer_id = @user_id');

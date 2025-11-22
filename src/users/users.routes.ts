@@ -8,7 +8,7 @@ const userRoutes = new Hono()
 
 
 // Get all users
-userRoutes.get('/users', adminRoleAuth, userControllers.getAllUsers)
+userRoutes.get('/users', userControllers.getAllUsers)
 
 // Get user by user_id
 userRoutes.get('/users/:user_id', userControllers.getUserById)

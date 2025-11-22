@@ -115,3 +115,34 @@ export const deleteOrderService = async (order_id: number): Promise<string> => {
         .query('DELETE FROM OrdersTable OUTPUT DELETED.* WHERE order_id = @order_id');
     return result.rowsAffected[0] === 1 ? "Order deleted successfully" : "Failed to delete order"
 }
+// services/order.service.ts - For getting user's recent orders
+export const getUserRecentOrders = async (user_id: number, limit: number = 5) => {
+    const db = getDbPool();
+    
+    try {
+        const result = await db.request()
+            .input('user_id', user_id)
+            .input('limit', limit)
+            .query(`
+                SELECT TOP (@limit)
+                    o.order_id as id,
+                    r.name as restaurant,
+                    mi.name as items,
+                    o.total_amount as amount,
+                    o.status,
+                    FORMAT(o.created_at, 'MMM dd, yyyy') as date,
+                    0 as rating -- You can add ratings later
+                FROM OrdersTable o
+                LEFT JOIN Restaurants r ON o.restaurant_id = r.restaurant_id
+                LEFT JOIN MenuItems mi ON o.menu_item_id = mi.menu_item_id
+                WHERE o.customer_id = @user_id
+                ORDER BY o.created_at DESC
+            `);
+
+        return result.recordset;
+        
+    } catch (error) {
+        console.error('Error fetching user recent orders:', error);
+        throw error;
+    }
+};
